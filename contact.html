@@ -1,0 +1,15 @@
+---
+layout: default
+title: Contact
+---
+<section class="post-detail">
+  <h1 class="post-title">Hubungi Kami</h1>
+  <div class="post-content">
+    <p>Punya pertanyaan atau ingin berkolaborasi? Silakan hubungi kami melalui media sosial di footer, atau kirim pesan WhatsApp.</p>
+    {% if site.social.whatsapp %}
+      <a href="{{ site.social.whatsapp }}" class="btn-back" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i> Chat via WhatsApp
+      </a>
+    {% endif %}
+  </div>
+</section>

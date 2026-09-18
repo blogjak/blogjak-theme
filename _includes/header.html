@@ -1,0 +1,36 @@
+<!-- ============================================================
+     header.html — Navbar, logo, navigasi, toggle dark mode
+============================================================ -->
+<header class="site-header">
+  <nav class="navbar">
+    <a href="{{ '/' | relative_url }}" class="logo">
+      {% if site.logo %}
+        <img src="{{ site.logo | relative_url }}" alt="{{ site.site_name | default: site.title }}">
+      {% endif %}
+      <span class="site-name">{{ site.site_name | default: site.title }}</span>
+    </a>
+
+    <!-- Hamburger menu mobile (pure CSS, tanpa JS) -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+    <label for="menu-toggle" class="hamburger" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <ul class="nav-links">
+      {% for item in site.nav_menu %}
+        <li>
+          <a href="{{ item.url | relative_url }}"
+             {% if page.url == item.url %}class="active"{% endif %}>
+            {{ item.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Tombol Dark Mode Toggle -->
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Ganti tema gelap/terang">
+      <i class="fa-solid fa-sun icon-sun"></i>
+      <i class="fa-solid fa-moon icon-moon"></i>
+    </button>
+  </nav>
+</header>

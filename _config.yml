@@ -1,0 +1,72 @@
+# ==========================================================
+# _config.yml — Blogjak Theme Versi 2
+# Konfigurasi utama Jekyll
+# ==========================================================
+
+title: "Blogjak Theme Versi 2"
+description: "Tema Jekyll native — pure Markdown, dark mode, dan image gallery grid."
+url: "https://username.github.io"     # Ganti dengan domain/GitHub Pages Anda
+baseurl: ""                            # Contoh: "/nama-repo" jika deploy di subfolder
+
+# Info situs (dipakai di header.html & footer.html)
+site_name: "Blogjak"
+logo: "/assets/img/logo.svg"
+author: "Admin Blogjak"
+
+# Media sosial (dipakai di footer.html — kosongkan "" untuk menyembunyikan ikon)
+social:
+  facebook: "https://facebook.com/"
+  instagram: "https://instagram.com/"
+  twitter: "https://twitter.com/"
+  youtube: "https://youtube.com/"
+  whatsapp: "https://wa.me/6280000000000"
+
+# Menu navigasi (dipakai di header.html)
+nav_menu:
+  - title: "Home"
+    url: "/"
+  - title: "About"
+    url: "/about.html"
+  - title: "Contact"
+    url: "/contact.html"
+
+# ==========================================================
+# Plugin & Pagination Dinamis (jekyll-paginate bawaan Jekyll)
+# ==========================================================
+plugins:
+  - jekyll-paginate
+
+paginate: 6                      # Jumlah postingan per halaman
+paginate_path: "/page:num/"      # Pola URL untuk halaman > 1
+
+# ==========================================================
+# Pengaturan Markdown & Permalink
+# ==========================================================
+markdown: kramdown
+kramdown:
+  input: GFM                     # GitHub Flavored Markdown (mendukung checklist, dll)
+  syntax_highlighter: rouge
+  parse_block_html: true         # Wajib true agar tag <details> di Markdown tidak dibungkus <p>
+
+permalink: /posts/:year/:month/:day/:title/
+
+# Default layout untuk seluruh berkas di _posts/
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      gallery_image: "/assets/img/default-cover.svg"
+
+# ==========================================================
+# Berkas & folder yang dikecualikan dari proses build
+# ==========================================================
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Jekyll akan otomatis lint _posts/ — tidak perlu JSON manual apa pun.

@@ -1,0 +1,54 @@
+---
+layout: default
+title: Home
+---
+
+<section class="hero">
+  <h1>{{ site.title }}</h1>
+  <p>{{ site.description }}</p>
+</section>
+
+<section class="gallery-section">
+  {% if paginator.posts.size > 0 %}
+    <!-- ==========================================================
+         Image Gallery Grid — responsif, otomatis dari _posts/
+         Loop paginator.posts disuntik oleh jekyll-paginate,
+         tidak perlu JSON atau HTML manual per artikel.
+    =========================================================== -->
+    <div class="gallery-grid">
+      {% for post in paginator.posts %}
+        <article class="gallery-item">
+          <a href="{{ post.url | relative_url }}" class="gallery-item-link">
+            <div class="gallery-item-image">
+              <img
+                src="{{ post.gallery_image | default: post.cover_image | default: '/assets/img/default-cover.svg' | relative_url }}"
+                alt="{{ post.title }}"
+                loading="lazy">
+              {% if post.categories.size > 0 %}
+                <span class="gallery-item-badge">{{ post.categories | first }}</span>
+              {% endif %}
+            </div>
+            <div class="gallery-item-body">
+              <h3 class="gallery-item-title">{{ post.title }}</h3>
+              <time class="gallery-item-date" datetime="{{ post.date | date_to_xmlschema }}">
+                {{ post.date | date: "%d %B %Y" }}
+              </time>
+              <p class="gallery-item-excerpt">
+                {{ post.excerpt | strip_html | truncatewords: 18 }}
+              </p>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination Dinamis: First « / Prev ‹ / Nomor / Next › / Last » -->
+    {% include pagination.html %}
+
+  {% else %}
+    <div class="empty-state">
+      <i class="fa-regular fa-folder-open"></i>
+      <p>Belum ada postingan. Tambahkan berkas Markdown baru di <code>_posts/</code>.</p>
+    </div>
+  {% endif %}
+</section>

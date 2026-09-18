@@ -1,0 +1,73 @@
+---
+layout: default
+---
+<article class="post-detail">
+  <header class="post-header">
+    {% if page.cover_image %}
+      <div class="post-cover">
+        <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+      </div>
+    {% endif %}
+
+    <h1 class="post-title">{{ page.title }}</h1>
+
+    <div class="post-meta">
+      <span class="post-meta-item">
+        <i class="fa-regular fa-calendar"></i>
+        <time datetime="{{ page.date | date_to_xmlschema }}">
+          {{ page.date | date: "%d %B %Y" }}
+        </time>
+      </span>
+      {% if page.author %}
+        <span class="post-meta-item">
+          <i class="fa-regular fa-user"></i> {{ page.author }}
+        </span>
+      {% endif %}
+      {% if page.categories.size > 0 %}
+        <span class="post-meta-item post-categories">
+          <i class="fa-solid fa-folder"></i>
+          {% for cat in page.categories %}
+            <span class="post-tag">{{ cat }}</span>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- ========================================================
+       Konten Markdown: Jekyll otomatis merender berkas .md di
+       _posts/ menjadi HTML di sini. Mendukung penuh elemen
+       Markdown standar: <details>, checklist [x]/[ ], blockquote,
+       tabel, code block, dll — tanpa perlu JS parser tambahan.
+  ======================================================== -->
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  {% if page.tags.size > 0 %}
+    <div class="post-tags">
+      {% for tag in page.tags %}
+        <span class="post-tag post-tag--outline">#{{ tag }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <nav class="post-nav">
+    {% if page.previous.url %}
+      <a class="post-nav-link post-nav-prev" href="{{ page.previous.url | relative_url }}">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>{{ page.previous.title }}</span>
+      </a>
+    {% endif %}
+    {% if page.next.url %}
+      <a class="post-nav-link post-nav-next" href="{{ page.next.url | relative_url }}">
+        <span>{{ page.next.title }}</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    {% endif %}
+  </nav>
+
+  <a href="{{ '/' | relative_url }}" class="btn-back">
+    <i class="fa-solid fa-grip"></i> Kembali ke Galeri
+  </a>
+</article>
