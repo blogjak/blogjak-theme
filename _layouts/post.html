@@ -4,13 +4,13 @@ layout: default
 <article class="post-single">
   <header class="post-header">
     <div class="container">
-      <div class="post-meta-top">
-        {% if page.categories %}
+      {% if page.categories %}
+        <div class="post-meta-top">
           {% for cat in page.categories %}
-            <a href="{{ '/categories/#' | append: cat | relative_url }}" class="post-category">{{ cat }}</a>
+            <span class="post-category">{{ cat }}</span>
           {% endfor %}
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
 
       <h1 class="post-title">{{ page.title }}</h1>
 
@@ -21,13 +21,10 @@ layout: default
       <div class="post-meta">
         <span class="meta-item">
           <i class="fa-regular fa-calendar"></i>
-          <time datetime="{{ page.date | date_to_xmlschema }}">
-            {{ page.date | date: "%d %B %Y" }}
-          </time>
+          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %B %Y" }}</time>
         </span>
         <span class="meta-item">
-          <i class="fa-regular fa-user"></i>
-          {{ page.author | default: site.author }}
+          <i class="fa-regular fa-user"></i> {{ page.author | default: site.author }}
         </span>
         <span class="meta-item">
           <i class="fa-regular fa-clock"></i>
@@ -57,16 +54,13 @@ layout: default
       {{ content }}
     </div>
 
-    <!-- Post Navigation -->
     <nav class="post-navigation">
       {% if page.previous.url %}
         <a class="post-nav-link prev" href="{{ page.previous.url | relative_url }}">
           <span class="nav-label"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</span>
           <span class="nav-title">{{ page.previous.title }}</span>
         </a>
-      {% else %}
-        <span></span>
-      {% endif %}
+      {% else %}<span></span>{% endif %}
 
       {% if page.next.url %}
         <a class="post-nav-link next" href="{{ page.next.url | relative_url }}">
@@ -76,7 +70,6 @@ layout: default
       {% endif %}
     </nav>
 
-    <!-- Back to Home -->
     <div class="back-home">
       <a href="{{ '/' | relative_url }}" class="btn btn-primary">
         <i class="fa-solid fa-house"></i> Kembali ke Beranda
