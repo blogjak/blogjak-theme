@@ -7,8 +7,21 @@ tagline: "Versi 2 - Pure Markdown Blogging"
 description: "Tema Jekyll native dengan dark mode, gallery grid, dan pagination dinamis."
 author: "Blogjak"
 email: "hello@blogjak.dev"
-url: "https://blogjak.dev"
-baseurl: ""
+
+# ====== PENTING: URL & BASEURL ======
+# Untuk GitHub Pages di repo "blogjak-theme":
+#   url: "https://username.github.io"
+#   baseurl: "/blogjak-theme"
+#
+# Untuk user site (username.github.io):
+#   url: "https://username.github.io"
+#   baseurl: ""
+#
+# Untuk custom domain / root:
+#   url: "https://domain.com"
+#   baseurl: ""
+url: "https://username.github.io"
+baseurl: "/blogjak-theme"
 
 # ---------- Build Settings ----------
 markdown: kramdown
