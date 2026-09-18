@@ -1,0 +1,53 @@
+---
+layout: default
+---
+
+<h2>Postingan Terbaru</h2>
+
+<!-- Mode Grid Galeri Gambar -->
+<div class="gallery-grid">
+  {% for post in paginator.posts %}
+    <div class="gallery-item">
+      <a href="{{ post.url | relative_url }}">
+        <img src="{{ post.image | default: 'https://via.placeholder.com/300x200' }}" alt="{{ post.title }}" loading="lazy">
+      </a>
+      <div class="gallery-info">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Pagination Dinamis dengan Double Arrow & Arrow -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  <!-- First & Previous -->
+  {% if paginator.page > 1 %}
+    <a href="{{ '/' | relative_url }}">&laquo;</a>
+    <a href="{{ paginator.previous_page_path | relative_url }}">&lsaquo;</a>
+  {% else %}
+    <span class="disabled">&laquo;</span>
+    <span class="disabled">&lsaquo;</span>
+  {% endif %}
+
+  <!-- Page Numbers -->
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <span class="active">{{ page }}</span>
+    {% elsif page == 1 %}
+      <a href="{{ '/' | relative_url }}">{{ page }}</a>
+    {% else %}
+      <a href="{{ '/page' | append: page | append: '/' | relative_url }}">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+
+  <!-- Next & Last -->
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}">&rsaquo;</a>
+    <a href="{{ '/page' | append: paginator.total_pages | append: '/' | relative_url }}">&raquo;</a>
+  {% else %}
+    <span class="disabled">&rsaquo;</span>
+    <span class="disabled">&raquo;</span>
+  {% endif %}
+</div>
+{% endif %}
