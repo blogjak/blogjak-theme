@@ -1,36 +1,31 @@
-<!-- ============================================================
-     header.html — Navbar, logo, navigasi, toggle dark mode
-============================================================ -->
 <header class="site-header">
-  <nav class="navbar">
-    <a href="{{ '/' | relative_url }}" class="logo">
-      {% if site.logo %}
-        <img src="{{ site.logo | relative_url }}" alt="{{ site.site_name | default: site.title }}">
-      {% endif %}
-      <span class="site-name">{{ site.site_name | default: site.title }}</span>
+  <div class="container header-inner">
+    <!-- Logo -->
+    <a href="{{ '/' | relative_url }}" class="site-logo">
+      <span class="logo-mark"><i class="fa-solid fa-blog"></i></span>
+      <span class="logo-text">
+        <strong>Blogjak</strong><em>Theme</em>
+      </span>
     </a>
 
-    <!-- Hamburger menu mobile (pure CSS, tanpa JS) -->
-    <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
-    <label for="menu-toggle" class="hamburger" aria-label="Buka menu">
-      <span></span><span></span><span></span>
-    </label>
+    <!-- Navigasi -->
+    <nav class="nav-menu" aria-label="Navigasi utama">
+      <ul>
+        <li><a href="{{ '/' | relative_url }}"><i class="fa-solid fa-house"></i> Beranda</a></li>
+        <li><a href="{{ '/about/' | relative_url }}"><i class="fa-solid fa-circle-info"></i> Tentang</a></li>
+        <li><a href="{{ '/archive/' | relative_url }}"><i class="fa-solid fa-box-archive"></i> Arsip</a></li>
+        <li><a href="{{ '/contact/' | relative_url }}"><i class="fa-solid fa-envelope"></i> Kontak</a></li>
+      </ul>
+    </nav>
 
-    <ul class="nav-links">
-      {% for item in site.nav_menu %}
-        <li>
-          <a href="{{ item.url | relative_url }}"
-             {% if page.url == item.url %}class="active"{% endif %}>
-            {{ item.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-
-    <!-- Tombol Dark Mode Toggle -->
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Ganti tema gelap/terang">
-      <i class="fa-solid fa-sun icon-sun"></i>
-      <i class="fa-solid fa-moon icon-moon"></i>
-    </button>
-  </nav>
+    <!-- Actions -->
+    <div class="header-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Ganti tema">
+        <i class="theme-icon fa-solid fa-moon"></i>
+      </button>
+      <button class="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 </header>
