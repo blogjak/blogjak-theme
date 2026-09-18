@@ -1,73 +1,86 @@
 ---
 layout: default
 ---
-<article class="post-detail">
+<article class="post-single">
   <header class="post-header">
-    {% if page.cover_image %}
-      <div class="post-cover">
-        <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title }}" loading="lazy">
-      </div>
-    {% endif %}
-
-    <h1 class="post-title">{{ page.title }}</h1>
-
-    <div class="post-meta">
-      <span class="post-meta-item">
-        <i class="fa-regular fa-calendar"></i>
-        <time datetime="{{ page.date | date_to_xmlschema }}">
-          {{ page.date | date: "%d %B %Y" }}
-        </time>
-      </span>
-      {% if page.author %}
-        <span class="post-meta-item">
-          <i class="fa-regular fa-user"></i> {{ page.author }}
-        </span>
-      {% endif %}
-      {% if page.categories.size > 0 %}
-        <span class="post-meta-item post-categories">
-          <i class="fa-solid fa-folder"></i>
+    <div class="container">
+      <div class="post-meta-top">
+        {% if page.categories %}
           {% for cat in page.categories %}
-            <span class="post-tag">{{ cat }}</span>
+            <a href="{{ '/categories/#' | append: cat | relative_url }}" class="post-category">{{ cat }}</a>
           {% endfor %}
-        </span>
+        {% endif %}
+      </div>
+
+      <h1 class="post-title">{{ page.title }}</h1>
+
+      {% if page.description %}
+        <p class="post-description">{{ page.description }}</p>
       {% endif %}
+
+      <div class="post-meta">
+        <span class="meta-item">
+          <i class="fa-regular fa-calendar"></i>
+          <time datetime="{{ page.date | date_to_xmlschema }}">
+            {{ page.date | date: "%d %B %Y" }}
+          </time>
+        </span>
+        <span class="meta-item">
+          <i class="fa-regular fa-user"></i>
+          {{ page.author | default: site.author }}
+        </span>
+        <span class="meta-item">
+          <i class="fa-regular fa-clock"></i>
+          {% assign words = content | number_of_words %}
+          {% if words < 360 %}1 menit{% else %}{{ words | divided_by: 180 }} menit{% endif %} baca
+        </span>
+        {% if page.tags %}
+          <span class="meta-item">
+            <i class="fa-solid fa-tags"></i>
+            {% for tag in page.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+          </span>
+        {% endif %}
+      </div>
     </div>
   </header>
 
-  <!-- ========================================================
-       Konten Markdown: Jekyll otomatis merender berkas .md di
-       _posts/ menjadi HTML di sini. Mendukung penuh elemen
-       Markdown standar: <details>, checklist [x]/[ ], blockquote,
-       tabel, code block, dll — tanpa perlu JS parser tambahan.
-  ======================================================== -->
-  <div class="post-content">
-    {{ content }}
-  </div>
-
-  {% if page.tags.size > 0 %}
-    <div class="post-tags">
-      {% for tag in page.tags %}
-        <span class="post-tag post-tag--outline">#{{ tag }}</span>
-      {% endfor %}
+  {% if page.image %}
+  <div class="post-hero">
+    <div class="container">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
     </div>
+  </div>
   {% endif %}
 
-  <nav class="post-nav">
-    {% if page.previous.url %}
-      <a class="post-nav-link post-nav-prev" href="{{ page.previous.url | relative_url }}">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>{{ page.previous.title }}</span>
-      </a>
-    {% endif %}
-    {% if page.next.url %}
-      <a class="post-nav-link post-nav-next" href="{{ page.next.url | relative_url }}">
-        <span>{{ page.next.title }}</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-    {% endif %}
-  </nav>
+  <div class="container">
+    <div class="post-content">
+      {{ content }}
+    </div>
 
-  <a href="{{ '/' | relative_url }}" class="btn-back">
-    <i class="fa-solid fa-grip"></i> Kembali ke Galeri
-  </a>
+    <!-- Post Navigation -->
+    <nav class="post-navigation">
+      {% if page.previous.url %}
+        <a class="post-nav-link prev" href="{{ page.previous.url | relative_url }}">
+          <span class="nav-label"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</span>
+          <span class="nav-title">{{ page.previous.title }}</span>
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      {% if page.next.url %}
+        <a class="post-nav-link next" href="{{ page.next.url | relative_url }}">
+          <span class="nav-label">Selanjutnya <i class="fa-solid fa-arrow-right"></i></span>
+          <span class="nav-title">{{ page.next.title }}</span>
+        </a>
+      {% endif %}
+    </nav>
+
+    <!-- Back to Home -->
+    <div class="back-home">
+      <a href="{{ '/' | relative_url }}" class="btn btn-primary">
+        <i class="fa-solid fa-house"></i> Kembali ke Beranda
+      </a>
+    </div>
+  </div>
 </article>
