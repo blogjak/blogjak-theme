@@ -45,9 +45,21 @@ twitter:
 
 social:
   name: Blogjak Theme
-  links:
-    - https://github.com/blogjak
-    - https://twitter.com/blogjak
+  github: "https://github.com/blogjak"
+  twitter: "https://twitter.com/blogjak"      # atau X: https://x.com/blogjak
+  facebook: "https://facebook.com/blogjakcom"
+  instagram: "https://instagram.com/blogjak"
+  youtube: ""
+  linkedin: ""
+  tiktok: ""
+  telegram: ""
+  whatsapp: ""
+  pinterest: ""
+  reddit: ""
+  discord: ""
+  medium: ""
+  devto: ""
+  rss: "/feed.xml"                            # otomatis dari jekyll-feed
 
 # ---------- Search ----------
 search:
