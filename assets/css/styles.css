@@ -782,7 +782,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ============================================
-   SOCIAL LINKS — Footer
+   SOCIAL LINKS — SVG Version
    ============================================ */
 
 .social-links {
@@ -792,7 +792,8 @@ img { max-width: 100%; height: auto; display: block; }
   margin-top: 4px;
 }
 
-.social-links a {
+.social-links a.social-link {
+  position: relative;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -801,73 +802,37 @@ img { max-width: 100%; height: auto; display: block; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid #262626;
   text-decoration: none;
-  position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-.social-links a::before {
+.social-links a.social-link::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--royal-blue), var(--orange));
   opacity: 0;
   transition: opacity 0.25s ease;
   z-index: 0;
+  border-radius: 50%;
 }
 
-.social-links a i {
+.social-links a.social-link svg {
   position: relative;
   z-index: 1;
+  display: block;
+  width: 20px;
+  height: 20px;
   transition: transform 0.25s ease;
 }
 
-.social-links a:hover {
+.social-links a.social-link:hover {
   color: #ffffff;
   border-color: transparent;
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(30, 58, 138, 0.35);
-}
-
-.social-links a:hover::before {
-  opacity: 1;
-}
-
-.social-links a:hover i {
-  transform: scale(1.15);
-}
-
-/* Warna khusus per platform (opsional, untuk hover) */
-.social-links a[aria-label="GitHub"]:hover::before { background: #333; }
-.social-links a[aria-label="Twitter / X"]:hover::before { background: #000; }
-.social-links a[aria-label="Facebook"]:hover::before { background: #1877f2; }
-.social-links a[aria-label="Instagram"]:hover::before {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-.social-links a[aria-label="YouTube"]:hover::before { background: #ff0000; }
-.social-links a[aria-label="LinkedIn"]:hover::before { background: #0a66c2; }
-.social-links a[aria-label="TikTok"]:hover::before { background: #000; }
-.social-links a[aria-label="Telegram"]:hover::before { background: #0088cc; }
-.social-links a[aria-label="WhatsApp"]:hover::before { background: #25d366; }
-.social-links a[aria-label="Pinterest"]:hover::before { background: #bd081c; }
-.social-links a[aria-label="Reddit"]:hover::before { background: #ff4500; }
-.social-links a[aria-label="Discord"]:hover::before { background: #5865f2; }
-.social-links a[aria-label="Medium"]:hover::before { background: #000; }
-.social-links a[aria-label="Dev.to"]:hover::before { background: #0a0a0a; }
-.social-links a[aria-label="Email"]:hover::before { background: var(--orange); }
-.social-links a[aria-label="RSS Feed"]:hover::before { background: #f26522; }
-
-/* Mobile */
-@media (max-width: 480px) {
-  .social-links a {
-    width: 38px;
-    height: 38px;
-    font-size: 0.9rem;
-  }
-}
+  box-shadow: 0 8px 20px rgba(30, 58,
 
 .footer-bottom {
   border-top: 1px solid #1f1f1f;
