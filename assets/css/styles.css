@@ -1122,13 +1122,14 @@ html, body {
   }
 }
 /* ============================================
-   SEARCH TOGGLE & MODAL — FINAL FIX
+   SEARCH — FINAL BERSIH v3
    ============================================ */
 
-/* ---------- Tombol Search di Header ---------- */
-.search-toggle {
+/* ---------- Tombol Search (Desktop + Mobile) ---------- */
+.header-actions .search-toggle,
+button.search-toggle {
   position: relative;
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 42px;
@@ -1145,102 +1146,100 @@ html, body {
   font-size: 16px;
   line-height: 1;
   flex-shrink: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
-  z-index: 1;
-  pointer-events: auto !important;
+  pointer-events: auto;
+  z-index: 5;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-[data-theme="dark"] .search-toggle {
+[data-theme="dark"] .header-actions .search-toggle,
+[data-theme="dark"] button.search-toggle {
   color: #FFA500;
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Ikon di dalam tombol */
-.search-toggle i,
-.search-toggle .fa-magnifying-glass {
-  display: inline-block;
-  visibility: visible;
-  opacity: 1;
-  color: inherit;
-  -webkit-text-fill-color: currentColor;
-  font-size: 16px;
+.header-actions .search-toggle svg,
+.header-actions .search-toggle i,
+button.search-toggle svg,
+button.search-toggle i {
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
   line-height: 1;
+  stroke: currentColor;
+  color: inherit;
   pointer-events: none;
+  background: transparent;
 }
 
-.search-toggle:hover {
+.header-actions .search-toggle:hover,
+button.search-toggle:hover {
   background: #FFA500;
   color: #ffffff;
   border-color: #FFA500;
   transform: scale(1.08);
 }
-[data-theme="dark"] .search-toggle:hover {
+[data-theme="dark"] .header-actions .search-toggle:hover,
+[data-theme="dark"] button.search-toggle:hover {
   color: #0a0a0a;
 }
 
-.search-toggle:focus-visible {
-  outline: 2px solid #FFA500;
-  outline-offset: 3px;
-}
+/* ---------- PASTIKAN icon search pakai SVG, bukan FontAwesome ---------- */
+/* (jika Anda pakai SVG, ini sudah benar) */
+/* (jika pakai <i class="fa-...">, biarkan rule di atas) */
 
-/* ---------- Pastikan .header-actions selalu flex row ---------- */
+/* ---------- Header Actions — Flex row, tidak menumpuk ---------- */
 .header-actions {
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  z-index: 10;
+  z-index: 20;
+  position: relative;
 }
 
 /* ---------- Search Modal ---------- */
 .search-modal {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   display: none;
   align-items: flex-start;
   justify-content: center;
   padding: 80px 20px 20px;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  overflow-y: auto;
 }
 
-.search-modal.active,
-.search-modal:not([hidden]) {
-  display: flex;
-  opacity: 1;
+.search-modal.active {
+  display: flex !important;
 }
 
-.search-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  cursor: pointer;
+.search-modal[hidden] {
+  display: none !important;
 }
 
-.search-container {
-  position: relative;
+.search-modal .search-container {
   width: 100%;
   max-width: 640px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  transform: translateY(-12px) scale(0.98);
-  transition: transform 0.25s ease;
-  max-height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
-}
-
-.search-modal.active .search-container {
-  transform: translateY(0) scale(1);
+  max-height: calc(100vh - 120px);
 }
 
 .search-header {
@@ -1249,25 +1248,28 @@ html, body {
   gap: 12px;
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
 }
 
 .search-header .search-icon {
   color: var(--accent);
   font-size: 1rem;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-input {
   flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: var(--text);
+  min-width: 0;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: var(--text) !important;
   font-size: 1rem;
   font-family: inherit;
   padding: 4px 0;
-  min-width: 0;
+  box-shadow: none !important;
 }
 
 .search-input::placeholder {
@@ -1276,8 +1278,8 @@ html, body {
 }
 
 .search-close {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: none;
   background: transparent;
@@ -1286,21 +1288,21 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 .search-close:hover {
   background: var(--bg-soft);
   color: var(--text);
 }
 
-/* ---------- Hasil Pencarian ---------- */
 .search-results {
   padding: 8px 0;
   overflow-y: auto;
   flex: 1;
-  min-height: 100px;
+  min-height: 120px;
   max-height: 60vh;
 }
 
@@ -1318,8 +1320,8 @@ html, body {
 }
 
 .search-count {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1332,14 +1334,17 @@ html, body {
   border-bottom: 1px solid var(--border);
   color: var(--text);
   text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease;
   cursor: pointer;
+  transition: background 0.15s ease, padding-left 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 .search-result-item:hover,
 .search-result-item.selected {
   background: var(--bg-soft);
-  border-left: 3px solid var(--accent);
-  padding-left: 17px;
+  padding-left: 24px;
+}
+.search-result-item:last-child {
+  border-bottom: none;
 }
 
 .search-result-title {
@@ -1350,16 +1355,16 @@ html, body {
   line-height: 1.35;
 }
 .search-result-title mark {
-  background: rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.35);
   color: inherit;
-  padding: 0 2px;
+  padding: 0 3px;
   border-radius: 3px;
 }
 
 .search-result-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-size: 0.78rem;
   color: var(--text-muted);
   margin-bottom: 6px;
@@ -1373,10 +1378,9 @@ html, body {
   color: var(--white);
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .search-result-excerpt {
@@ -1386,12 +1390,10 @@ html, body {
 }
 .search-result-excerpt mark {
   background: rgba(249, 115, 22, 0.25);
-  color: inherit;
   padding: 0 2px;
   border-radius: 3px;
 }
 
-/* ---------- Footer Modal ---------- */
 .search-footer {
   display: flex;
   justify-content: center;
@@ -1399,7 +1401,7 @@ html, body {
   padding: 10px 20px;
   border-top: 1px solid var(--border);
   background: var(--bg-soft);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
 }
 .search-footer kbd {
@@ -1414,9 +1416,10 @@ html, body {
   margin-right: 3px;
 }
 
-/* ---------- Mobile Adjustments ---------- */
+/* ---------- Mobile: pastikan tetap bisa diklik ---------- */
 @media (max-width: 768px) {
-  .search-toggle {
+  .header-actions .search-toggle,
+  button.search-toggle {
     display: inline-flex !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -1424,26 +1427,45 @@ html, body {
     height: 40px;
     min-width: 40px;
     min-height: 40px;
+    pointer-events: auto !important;
+    z-index: 5 !important;
   }
 
   .search-modal {
-    padding: 40px 12px 12px;
+    padding: 60px 12px 12px;
+    align-items: flex-start;
   }
-  .search-container {
-    max-height: calc(100vh - 60px);
+  .search-modal .search-container {
+    max-height: calc(100vh - 80px);
   }
   .search-footer {
     display: none;
   }
+  .search-close {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 @media (max-width: 480px) {
-  .search-toggle,
-  .theme-toggle {
+  .header-actions .search-toggle,
+  .header-actions .theme-toggle,
+  button.search-toggle {
     width: 38px;
     height: 38px;
     min-width: 38px;
     min-height: 38px;
+  }
+}
+
+/* ---------- Cegah nav-menu mobile menutupi tombol search ---------- */
+@media (max-width: 768px) {
+  .nav-menu {
+    z-index: 99;      /* lebih rendah dari header-actions */
+  }
+  .header-actions {
+    position: relative;
+    z-index: 100;     /* LEBIH TINGGI dari nav-menu */
   }
 }
 /* ============================================
