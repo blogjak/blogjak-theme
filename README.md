@@ -32,6 +32,26 @@ Designed with a bold **royal blue / orange / black / white** palette, it's perfe
 | 📄 **Native Pagination** | Full navigation controls: First («), Previous (‹), Page Numbers, Next (›), Last (»). Powered by `jekyll-paginate`. |
 | 📱 **Fully Responsive** | Mobile hamburger menu, adaptive grid columns, fluid typography. |
 
+## 📝 Changelog
+
+### v2.1 (Current)
+- 🔍 **Client-side search** with fuzzy matching & keyboard shortcuts
+- 🔗 **Related posts** widget (by categories → tags → recent)
+- ⚡ **SEO optimization**: Open Graph, Twitter Card, JSON-LD, sitemap, robots.txt
+- 🎨 **SVG social icons** in footer (no FontAwesome dependency for socials)
+- 🐛 **Fixes**: double post content, search button layering, related posts logic
+- 📚 Updated README with troubleshooting section
+
+### v2.0
+- 🌗 Dark mode toggle with localStorage
+- 🖼️ Gallery grid homepage
+- 📄 Native pagination with full nav controls
+- 📱 Fully responsive with hamburger menu
+- 🎨 Royal Blue / Orange / Black / White palette
+
+### v1.0
+- Initial release
+- 
 #### New in v2.1
 | Feature | Description |
 |---|---|
