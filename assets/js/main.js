@@ -1,6 +1,6 @@
 /* ============================================
    Blogjak Theme Versi 2 — Main JavaScript
-   Universal compatibility version
+   FINAL SVG VERSION — Bersih & Konsisten
    ============================================ */
 (function () {
   'use strict';
@@ -8,55 +8,38 @@
   var root = document.documentElement;
 
   /* ---------- Dark Mode Toggle ---------- */
-  function getThemeColor(theme) {
-    return theme === 'dark' ? '#FFA500' : '#1e3a8a';
-  }
-
-  function setThemeIcon(theme) {
-    var color = getThemeColor(theme);
-    var iconClass = theme === 'dark' ? 'fa-sun' : 'fa-moon';
-
-    // Update semua ikon (apapun parentnya)
-    document.querySelectorAll('.theme-icon').forEach(function (icon) {
-      icon.className = 'theme-icon fa-solid ' + iconClass;
-      // PAKSA inline style — jaminan terlihat walau CSS gagal load
-      icon.style.cssText =
-        'color:' + color + ' !important;' +
-        '-webkit-text-fill-color:' + color + ' !important;' +
-        'display:inline-block !important;' +
-        'visibility:visible !important;' +
-        'opacity:1 !important;' +
-        'font-size:20px !important;' +
-        'line-height:1 !important;' +
-        'pointer-events:none;';
-    });
-
-    // Update warna tombol juga
-    document.querySelectorAll('.theme-toggle, .theme-switch-btn').forEach(function (btn) {
-      btn.style.color = color;
-      btn.style.webkitTextFillColor = color;
-    });
-  }
-
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     try { localStorage.setItem('blogjak-theme', theme); } catch (e) {}
-    setThemeIcon(theme);
   }
 
-  // Init — pakai theme yang sudah di-set oleh bootstrap script
-  setThemeIcon(root.getAttribute('data-theme') || 'light');
+  function bindToggleButtons() {
+    var buttons = document.querySelectorAll('[data-theme-toggle]');
+    for (var i = 0; i < buttons.length; i++) {
+      // Hindari double-binding
+      if (buttons[i].dataset.bound === 'true') continue;
+      buttons[i].dataset.bound = 'true';
 
-  // Bind semua tombol toggle
-  document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-    });
-  });
+      buttons[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+    }
+  }
 
-  // Ikuti perubahan sistem (jika user belum override)
+  // Bind sekarang (kalau DOM sudah siap)
+  bindToggleButtons();
+
+  // Bind ulang saat DOM siap (untuk halaman yang load header via include)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindToggleButtons);
+  }
+
+  // Bind ulang setelah semua resource selesai dimuat (fix single post)
+  window.addEventListener('load', bindToggleButtons);
+
+  /* ---------- Follow System Preference ---------- */
   if (window.matchMedia) {
     try {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
@@ -68,10 +51,13 @@
   }
 
   /* ---------- Hamburger Menu ---------- */
-  var hamburger = document.getElementById('hamburger') || document.querySelector('.hamburger');
-  var navMenu = document.getElementById('nav-menu') || document.querySelector('.nav-menu, .nav-links');
+  function bindHamburger() {
+    var hamburger = document.getElementById('hamburger');
+    var navMenu = document.getElementById('nav-menu');
+    if (!hamburger || !navMenu) return;
+    if (hamburger.dataset.bound === 'true') return;
+    hamburger.dataset.bound = 'true';
 
-  if (hamburger && navMenu) {
     hamburger.addEventListener('click', function (e) {
       e.preventDefault();
       var isOpen = navMenu.classList.toggle('active');
@@ -95,4 +81,10 @@
       }
     });
   }
+
+  bindHamburger();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindHamburger);
+  }
+  window.addEventListener('load', bindHamburger);
 })();
