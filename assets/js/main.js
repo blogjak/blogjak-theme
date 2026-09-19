@@ -6,22 +6,36 @@
 
   var root = document.documentElement;
 
-  /* ---------- Dark Mode Toggle ---------- */
-  function setThemeIcon(theme) {
-    var icons = document.querySelectorAll('.theme-icon');
-    icons.forEach(function (icon) {
-      icon.className = 'theme-icon fa-solid ' + (theme === 'dark' ? 'fa-sun' : 'fa-moon');
-    });
-  }
+ /* ---------- Dark Mode Toggle ---------- */
+function setThemeIcon(theme) {
+  var icons = document.querySelectorAll('.theme-icon');
+  icons.forEach(function (icon) {
+    // Set class FontAwesome yang benar
+    icon.className = 'theme-icon fa-solid ' + (theme === 'dark' ? 'fa-sun' : 'fa-moon');
 
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    try { localStorage.setItem('blogjak-theme', theme); } catch (e) {}
-    setThemeIcon(theme);
-  }
+    // Set warna eksplisit sebagai fallback (jika CSS gagal load)
+    var color = theme === 'dark' ? '#f97316' : '#1e3a8a';
+    icon.style.color = color;
+    icon.style.webkitTextFillColor = color;
+    icon.style.display = 'inline-block';
+    icon.style.fontSize = '18px';
+    icon.style.lineHeight = '1';
+  });
 
-  // Init ikon sesuai theme saat ini
-  setThemeIcon(root.getAttribute('data-theme') || 'light');
+  // Set warna tombol juga
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    btn.style.color = theme === 'dark' ? '#f97316' : '#1e3a8a';
+  });
+}
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  try { localStorage.setItem('blogjak-theme', theme); } catch (e) {}
+  setThemeIcon(theme);
+}
+
+// Init ikon sesuai theme saat ini
+setThemeIcon(root.getAttribute('data-theme') || 'light');
 
   document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
     btn.addEventListener('click', function () {
