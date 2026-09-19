@@ -252,6 +252,28 @@ Out of the box:
 - [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 
 ---
+### 🔎 Google Site Verification
+
+Before Google can index your site, you need to verify ownership via [Google Search Console](https://search.google.com/search-console).
+
+Google provides **4 verification methods**. Choose one:
+
+| Method | Where to Place | Best For |
+|---|---|---|
+| **HTML meta tag** ⭐ | `_includes/head.html` | Recommended — clean & centralized |
+| **HTML file** | Project root folder | Simple, no code changes |
+| **DNS TXT record** | Your DNS provider | Independent of website |
+| **Google Analytics / Tag Manager** | `_includes/head.html` | Bonus analytics |
+
+#### Method 1: HTML Meta Tag (Recommended)
+
+**Step 1** — Add to `_config.yml`:
+
+```yaml
+# ---------- Search Engine Verification ----------
+google_site_verification: "AbC123XyZ456..."
+bing_site_verification: "..."
+yandex_site_verification: "..."
 
 ### 🎨 Customization
 
@@ -525,6 +547,33 @@ Pencarian **client-side**, tidak butuh backend:
 - **Navigasi:** `↑` `↓` untuk pindah, `Enter` untuk buka, `Esc` untuk tutup
 - **Cakupan:** Mencari di judul, deskripsi, konten, kategori, dan tag
 - **Ranking:** Judul > tag > kategori > deskripsi > konten
+
+
+---
+
+```markdown
+### 🔎 Verifikasi Google Site
+
+Sebelum Google bisa meng-index situs Anda, Anda perlu memverifikasi kepemilikan melalui [Google Search Console](https://search.google.com/search-console).
+
+Google menyediakan **4 metode verifikasi**. Pilih salah satu:
+
+| Metode | Tempat Menaruh | Cocok Untuk |
+|---|---|---|
+| **HTML meta tag** ⭐ | `_includes/head.html` | Direkomendasikan — rapi & terpusat |
+| **HTML file** | Root folder proyek | Simpel, tanpa ubah kode |
+| **DNS TXT record** | DNS provider Anda | Independen dari website |
+| **Google Analytics / Tag Manager** | `_includes/head.html` | Bonus analytics |
+
+#### Metode 1: HTML Meta Tag (Direkomendasikan)
+
+**Langkah 1** — Tambahkan ke `_config.yml`:
+
+```yaml
+# ---------- Search Engine Verification ----------
+google_site_verification: "AbC123XyZ456..."
+bing_site_verification: "..."
+yandex_site_verification: "..."
 
 **Kustomisasi di `_config.yml`:**
 ```yaml
