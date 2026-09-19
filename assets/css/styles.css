@@ -1048,65 +1048,102 @@ html, body {
   overflow-x: hidden;
 }
 /* ============================================
-   FIX: Dark Mode Toggle Icon — Desktop
+   THEME TOGGLE — Definitive Fix
    ============================================ */
 
 .theme-toggle {
   position: relative;
   width: 42px;
   height: 42px;
+  min-width: 42px;
+  min-height: 42px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: var(--bg-elev);
-  color: var(--text) !important;    /* pastikan warna teks terlihat */
+  color: var(--text);
   cursor: pointer;
-  display: inline-flex !important;  /* pastikan flex aktif di desktop */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  line-height: 1;
   padding: 0;
-  transition: all var(--transition);
-  flex-shrink: 0;                   /* jangan menyusut di flex row */
-  overflow: hidden;                 /* cegah ikon bocor */
-}
-
-/* Pastikan ikon di dalamnya mewarisi warna tombol */
-.theme-toggle i,
-.theme-toggle .theme-icon {
-  display: inline-block !important;
-  color: inherit !important;        /* <- INI KUNCI UTAMANYA */
-  font-size: 1rem;
+  margin: 0;
+  font-size: 18px;
   line-height: 1;
-  width: 1em;
-  height: 1em;
-  text-align: center;
-  vertical-align: middle;
-  pointer-events: none;             /* klik di ikon tetap ke tombol */
+  flex-shrink: 0;
+  transition: all var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: visible; /* PENTING: jangan hidden */
 }
 
-/* Hover state */
-.theme-toggle:hover {
-  background: var(--accent);
-  color: var(--white) !important;
-  border-color: var(--accent);
-  transform: rotate(20deg);
+/* Warna teks tombol di kedua mode */
+[data-theme="light"] .theme-toggle,
+:root:not([data-theme="dark"]) .theme-toggle {
+  color: #1e3a8a; /* royal blue */
 }
 
-/* Fokus aksesibilitas */
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--orange);
-  outline-offset: 2px;
-}
-
-/* Dark mode: tombol tetap terlihat */
 [data-theme="dark"] .theme-toggle {
-  background: var(--bg-soft);
-  color: var(--orange) !important;
-  border-color: var(--border);
+  color: #f97316; /* orange */
+}
+
+/* Ikon — targetkan <i> DAN ::before-nya */
+.theme-toggle .theme-icon,
+.theme-toggle i.theme-icon,
+.theme-toggle i[class*="fa-"] {
+  display: inline-block !important;
+  font-style: normal;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  text-align: center;
+  /* WARNA EKSPLISIT untuk <i> */
+  color: currentColor !important;
+  /* WARNA EKSPLISIT untuk pseudo-element FontAwesome */
+  -webkit-text-fill-color: currentColor;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+
+/* KUNCI UTAMA: targetkan ::before FontAwesome */
+.theme-toggle .theme-icon::before,
+.theme-toggle i.theme-icon::before,
+.theme-toggle i[class*="fa-"]::before {
+  color: currentColor !important;
+  -webkit-text-fill-color: currentColor;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  display: inline-block;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Hover */
+.theme-toggle:hover {
+  transform: rotate(20deg) scale(1.05);
+}
+[data-theme="light"] .theme-toggle:hover,
+:root:not([data-theme="dark"]) .theme-toggle:hover {
+  background: #1e3a8a;
+  color: #ffffff !important;
+  border-color: #1e3a8a;
 }
 [data-theme="dark"] .theme-toggle:hover {
-  background: var(--orange);
-  color: var(--black) !important;
-  border-color: var(--orange);
+  background: #f97316;
+  color: #0a0a0a !important;
+  border-color: #f97316;
+}
+
+.theme-toggle:hover .theme-icon::before,
+.theme-toggle:hover i.theme-icon::before,
+.theme-toggle:hover i[class*="fa-"]::before {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit;
+}
+
+/* Focus */
+.theme-toggle:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 3px;
 }
