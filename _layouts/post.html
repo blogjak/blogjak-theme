@@ -122,12 +122,24 @@ layout: default
   {% endif %}
 
   <div class="container">
-
-    
-    <div class="back-home">
-      <a href="{{ '/' | relative_url }}" class="btn btn-primary">
-        <i class="fa-solid fa-house"></i> Kembali ke Beranda
-      </a>
-    </div>
+<div class="container">
+  <div class="post-content">
+    {{ content }}
   </div>
+
+  {% comment %} Related posts — hanya di single post {% endcomment %}
+  {% include related-posts.html %}
+
+  <nav class="post-navigation">
+    ...
+  </nav>
+
+  <div class="back-home">
+    <a href="{{ '/' | relative_url }}" class="btn btn-primary">
+      <i class="fa-solid fa-house"></i> Kembali ke Beranda
+    </a>
+  </div>
+</div>
+    
+    
 </article>
