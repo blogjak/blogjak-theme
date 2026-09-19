@@ -1,0 +1,97 @@
+{% if site.related.enabled and page.layout == 'post' %}
+{% assign max_related = site.related.count | default: 3 %}
+
+{% comment %} Kumpulkan kandidat: post lain dengan kategori/tag yang sama {% endcomment %}
+{% assign candidates = '' | split: '' %}
+
+{% comment %} Prioritas 1: kategori sama {% endcomment %}
+{% if page.categories and page.categories.size > 0 %}
+  {% for post in site.posts %}
+    {% if post.url != page.url %}
+      {% assign shared_cat = false %}
+      {% for cat in page.categories %}
+        {% if post.categories contains cat %}
+          {% assign shared_cat = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% if shared_cat %}
+        {% assign candidates = candidates | push: post %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Prioritas 2: tag sama {% endcomment %}
+{% if candidates.size < max_related and page.tags and page.tags.size > 0 %}
+  {% for post in site.posts %}
+    {% if post.url != page.url %}
+      {% assign already_in = false %}
+      {% for c in candidates %}
+        {% if c.url == post.url %}{% assign already_in = true %}{% break %}{% endif %}
+      {% endfor %}
+      {% unless already_in %}
+        {% assign shared_tag = false %}
+        {% for tag in page.tags %}
+          {% if post.tags contains tag %}
+            {% assign shared_tag = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if shared_tag %}
+          {% assign candidates = candidates | push: post %}
+        {% endif %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Prioritas 3: isi dengan post terbaru {% endcomment %}
+{% if candidates.size < max_related %}
+  {% for post in site.posts %}
+    {% if post.url != page.url %}
+      {% assign already_in = false %}
+      {% for c in candidates %}
+        {% if c.url == post.url %}{% assign already_in = true %}{% break %}{% endif %}
+      {% endfor %}
+      {% unless already_in %}
+        {% assign candidates = candidates | push: post %}
+        {% if candidates.size >= max_related %}{% break %}{% endif %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if candidates.size > 0 %}
+<section class="related-posts">
+  <h2 class="related-title">
+    <i class="fa-solid fa-link"></i>
+    Artikel Terkait
+  </h2>
+
+  <div class="related-grid">
+    {% for post in candidates limit: max_related %}
+      <a class="related-card" href="{{ post.url | relative_url }}">
+        <div class="related-image">
+          {% if post.image %}
+            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          {% else %}
+            <div class="related-placeholder"><i class="fa-solid fa-newspaper"></i></div>
+          {% endif %}
+        </div>
+        <div class="related-body">
+          {% if post.categories.first %}
+            <span class="related-cat">{{ post.categories.first }}</span>
+          {% endif %}
+          <h3 class="related-card-title">{{ post.title }}</h3>
+          <div class="related-card-meta">
+            <i class="fa-regular fa-calendar"></i>
+            {{ post.date | date: "%d %b %Y" }}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endif %}
