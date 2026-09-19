@@ -1048,102 +1048,144 @@ html, body {
   overflow-x: hidden;
 }
 /* ============================================
-   THEME TOGGLE — Definitive Fix
+   UNIVERSAL THEME TOGGLE FIX
+   Menargetkan .theme-toggle DAN .theme-switch-btn
+   Jaminan ikon terlihat di desktop & mobile
    ============================================ */
 
-.theme-toggle {
+/* ---------- Tombol Toggle ---------- */
+.theme-toggle,
+.theme-switch-btn {
   position: relative;
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  min-height: 42px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-elev);
-  color: var(--text);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  font-size: 18px;
-  line-height: 1;
-  flex-shrink: 0;
-  transition: all var(--transition);
-  -webkit-appearance: none;
-  appearance: none;
-  overflow: visible; /* PENTING: jangan hidden */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  cursor: pointer !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+  overflow: visible !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  transition: transform 0.25s ease, background 0.25s ease !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+  font-family: inherit !important;
 }
 
-/* Warna teks tombol di kedua mode */
-[data-theme="light"] .theme-toggle,
-:root:not([data-theme="dark"]) .theme-toggle {
-  color: #1e3a8a; /* royal blue */
+/* ---------- Warna EKSPLISIT berdasarkan theme ---------- */
+html[data-theme="light"] .theme-toggle,
+html[data-theme="light"] .theme-switch-btn,
+html:not([data-theme="dark"]) .theme-toggle,
+html:not([data-theme="dark"]) .theme-switch-btn {
+  color: #1e3a8a !important;
+  -webkit-text-fill-color: #1e3a8a !important;
 }
 
-[data-theme="dark"] .theme-toggle {
-  color: #f97316; /* orange */
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .theme-switch-btn {
+  color: #FFA500 !important;
+  -webkit-text-fill-color: #FFA500 !important;
 }
 
-/* Ikon — targetkan <i> DAN ::before-nya */
+/* ---------- Ikon: targetkan <i>, <span>, dan ::before ---------- */
+.theme-toggle i,
+.theme-toggle span,
 .theme-toggle .theme-icon,
-.theme-toggle i.theme-icon,
-.theme-toggle i[class*="fa-"] {
+.theme-switch-btn i,
+.theme-switch-btn span,
+.theme-switch-btn .theme-icon {
   display: inline-block !important;
-  font-style: normal;
-  font-size: 18px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+  font-size: inherit !important;
   line-height: 1 !important;
   width: auto !important;
   height: auto !important;
-  text-align: center;
-  /* WARNA EKSPLISIT untuk <i> */
-  color: currentColor !important;
-  /* WARNA EKSPLISIT untuk pseudo-element FontAwesome */
-  -webkit-text-fill-color: currentColor;
-  opacity: 1 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+.theme-toggle i::before,
+.theme-toggle span::before,
+.theme-switch-btn i::before,
+.theme-switch-btn span::before {
+  display: inline-block !important;
   visibility: visible !important;
-  pointer-events: none;
-}
-
-/* KUNCI UTAMA: targetkan ::before FontAwesome */
-.theme-toggle .theme-icon::before,
-.theme-toggle i.theme-icon::before,
-.theme-toggle i[class*="fa-"]::before {
-  color: currentColor !important;
-  -webkit-text-fill-color: currentColor;
-  font-family: "Font Awesome 6 Free" !important;
-  font-weight: 900 !important;
-  display: inline-block;
   opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Hover */
-.theme-toggle:hover {
-  transform: rotate(20deg) scale(1.05);
-}
-[data-theme="light"] .theme-toggle:hover,
-:root:not([data-theme="dark"]) .theme-toggle:hover {
-  background: #1e3a8a;
-  color: #ffffff !important;
-  border-color: #1e3a8a;
-}
-[data-theme="dark"] .theme-toggle:hover {
-  background: #f97316;
-  color: #0a0a0a !important;
-  border-color: #f97316;
-}
-
-.theme-toggle:hover .theme-icon::before,
-.theme-toggle:hover i.theme-icon::before,
-.theme-toggle:hover i[class*="fa-"]::before {
   color: inherit !important;
-  -webkit-text-fill-color: inherit;
+  -webkit-text-fill-color: inherit !important;
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
+  font-weight: 900 !important;
+  font-style: normal !important;
 }
 
-/* Focus */
-.theme-toggle:focus-visible {
-  outline: 2px solid #f97316;
-  outline-offset: 3px;
+/* Khusus kalau pakai icon SVG */
+.theme-toggle svg,
+.theme-switch-btn svg {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  color: inherit !important;
+}
+
+/* ---------- Hover ---------- */
+.theme-toggle:hover,
+.theme-switch-btn:hover {
+  background: #FFA500 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transform: rotate(20deg) scale(1.08) !important;
+  border-color: #FFA500 !important;
+}
+
+html[data-theme="dark"] .theme-toggle:hover,
+html[data-theme="dark"] .theme-switch-btn:hover {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* ---------- Fokus aksesibilitas ---------- */
+.theme-toggle:focus-visible,
+.theme-switch-btn:focus-visible {
+  outline: 2px solid #FFA500 !important;
+  outline-offset: 3px !important;
+}
+
+/* ---------- PAKSA terlihat di mobile ---------- */
+@media (max-width: 768px) {
+  .theme-toggle,
+  .theme-switch-btn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .theme-toggle i,
+  .theme-toggle span,
+  .theme-toggle .theme-icon,
+  .theme-switch-btn i,
+  .theme-switch-btn span,
+  .theme-switch-btn .theme-icon {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 }
