@@ -1,0 +1,37 @@
+{% if site.search.enabled %}
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
+  <div class="search-backdrop" data-search-close></div>
+
+  <div class="search-container">
+    <div class="search-header">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        type="search"
+        id="search-input"
+        class="search-input"
+        placeholder="{{ site.search.placeholder | default: 'Cari artikel...' }}"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-label="Cari artikel">
+      <button class="search-close" data-search-close aria-label="Tutup pencarian" type="button">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="search-results" id="search-results" aria-live="polite">
+      <p class="search-hint">
+        <i class="fa-solid fa-lightbulb"></i>
+        Ketik kata kunci untuk mulai mencari...
+      </p>
+    </div>
+
+    <div class="search-footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigasi</span>
+      <span><kbd>Enter</kbd> buka</span>
+      <span><kbd>Esc</kbd> tutup</span>
+    </div>
+  </div>
+</div>
+{% endif %}
