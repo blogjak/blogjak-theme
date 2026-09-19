@@ -177,26 +177,7 @@ img { max-width: 100%; height: auto; display: block; }
   gap: 10px;
 }
 
-.theme-toggle {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-elev);
-  color: var(--text);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  transition: all var(--transition);
-}
-.theme-toggle:hover {
-  background: var(--accent);
-  color: var(--white);
-  border-color: var(--accent);
-  transform: rotate(20deg);
-}
+
 
 /* Hamburger */
 .hamburger {
@@ -1048,171 +1029,95 @@ html, body {
   overflow-x: hidden;
 }
 /* ============================================
-   UNIVERSAL THEME TOGGLE FIX
-   Menargetkan .theme-toggle DAN .theme-switch-btn
-   Jaminan ikon terlihat di desktop & mobile
+   THEME TOGGLE — SVG VERSION (FINAL)
+   Bersih, tanpa duplikasi, konsisten di semua halaman
    ============================================ */
 
-/* ---------- Tombol Toggle ---------- */
-.theme-toggle,
-.theme-switch-btn {
+.theme-toggle {
   position: relative;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 42px !important;
-  height: 42px !important;
-  min-width: 42px !important;
-  min-height: 42px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border-radius: 50% !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  background: rgba(255, 255, 255, 0.2) !important;
-  cursor: pointer !important;
-  font-size: 20px !important;
-  line-height: 1 !important;
-  flex-shrink: 0 !important;
-  overflow: visible !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  transition: transform 0.25s ease, background 0.25s ease !important;
-  vertical-align: middle !important;
-  text-align: center !important;
-  font-family: inherit !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  color: #1e3a8a;                  /* Royal Blue di light mode */
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  vertical-align: middle;
 }
 
-/* ---------- Warna EKSPLISIT berdasarkan theme ---------- */
-html[data-theme="light"] .theme-toggle,
-html[data-theme="light"] .theme-switch-btn,
-html:not([data-theme="dark"]) .theme-toggle,
-html:not([data-theme="dark"]) .theme-switch-btn {
-  color: #1e3a8a !important;
-  -webkit-text-fill-color: #1e3a8a !important;
+/* Warna tombol di dark mode */
+[data-theme="dark"] .theme-toggle {
+  color: #FFA500;                  /* Orange di dark mode */
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-html[data-theme="dark"] .theme-toggle,
-html[data-theme="dark"] .theme-switch-btn {
-  color: #FFA500 !important;
-  -webkit-text-fill-color: #FFA500 !important;
+/* SVG di dalam tombol */
+.theme-toggle .theme-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;            /* ikut warna tombol */
+  fill: none;
+  color: inherit;
+  pointer-events: none;            /* klik di ikon tetap ke tombol */
+  transition: transform 0.3s ease;
 }
 
-/* ---------- Ikon: targetkan <i>, <span>, dan ::before ---------- */
-.theme-toggle i,
-.theme-toggle span,
-.theme-toggle .theme-icon,
-.theme-switch-btn i,
-.theme-switch-btn span,
-.theme-switch-btn .theme-icon {
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  color: inherit !important;
-  -webkit-text-fill-color: inherit !important;
-  font-size: inherit !important;
-  line-height: 1 !important;
-  width: auto !important;
-  height: auto !important;
-  pointer-events: none !important;
-  background: transparent !important;
+/* Toggle visibilitas SVG berdasarkan theme */
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun  { display: none; }
+
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+
+/* Hover */
+.theme-toggle:hover {
+  background: #FFA500;
+  color: #ffffff;
+  border-color: #FFA500;
+  transform: rotate(20deg) scale(1.05);
+}
+.theme-toggle:hover .theme-icon {
+  transform: rotate(-20deg);       /* ikon balik ke posisi netral */
+}
+[data-theme="dark"] .theme-toggle:hover {
+  background: #FFA500;
+  color: #0a0a0a;
+  border-color: #FFA500;
 }
 
-.theme-toggle i::before,
-.theme-toggle span::before,
-.theme-switch-btn i::before,
-.theme-switch-btn span::before {
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  color: inherit !important;
-  -webkit-text-fill-color: inherit !important;
-  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
-  font-weight: 900 !important;
-  font-style: normal !important;
+/* Focus aksesibilitas */
+.theme-toggle:focus-visible {
+  outline: 2px solid #FFA500;
+  outline-offset: 3px;
 }
 
-/* Khusus kalau pakai icon SVG */
-.theme-toggle svg,
-.theme-switch-btn svg {
-  display: block !important;
-  width: 20px !important;
-  height: 20px !important;
-  stroke: currentColor !important;
-  fill: none !important;
-  color: inherit !important;
-}
-
-/* ---------- Hover ---------- */
-.theme-toggle:hover,
-.theme-switch-btn:hover {
-  background: #FFA500 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  transform: rotate(20deg) scale(1.08) !important;
-  border-color: #FFA500 !important;
-}
-
-html[data-theme="dark"] .theme-toggle:hover,
-html[data-theme="dark"] .theme-switch-btn:hover {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-}
-
-/* ---------- Fokus aksesibilitas ---------- */
-.theme-toggle:focus-visible,
-.theme-switch-btn:focus-visible {
-  outline: 2px solid #FFA500 !important;
-  outline-offset: 3px !important;
-}
-
-/* ---------- PAKSA terlihat di mobile ---------- */
+/* Mobile: pastikan tetap tampil */
 @media (max-width: 768px) {
-  .theme-toggle,
-  .theme-switch-btn {
+  .theme-toggle {
     display: inline-flex !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
   }
-
-  .theme-toggle i,
-  .theme-toggle span,
-  .theme-toggle .theme-icon,
-  .theme-switch-btn i,
-  .theme-switch-btn span,
-  .theme-switch-btn .theme-icon {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+  .theme-toggle .theme-icon {
+    width: 18px;
+    height: 18px;
   }
 }
-.theme-toggle {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 42px !important;
-  height: 42px !important;
-  padding: 0 !important;
-  border-radius: 50% !important;
-  border: 1px solid var(--card-border, #e0e0e0) !important;
-  background: var(--card-bg, #f9f9f9) !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
-}
-.theme-toggle svg {
-  display: block !important;
-  width: 20px !important;
-  height: 20px !important;
-  stroke: currentColor !important;
-  fill: none !important;
-}
-[data-theme="light"] .theme-toggle { color: #1e3a8a !important; }
-[data-theme="dark"]  .theme-toggle { color: #FFA500 !important; }
-
-[data-theme="light"] .theme-toggle .icon-sun  { display: none !important; }
-[data-theme="light"] .theme-toggle .icon-moon { display: block !important; }
-[data-theme="dark"]  .theme-toggle .icon-moon { display: none !important; }
-[data-theme="dark"]  .theme-toggle .icon-sun  { display: block !important; }
