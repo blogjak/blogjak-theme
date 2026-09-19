@@ -1189,3 +1189,30 @@ html[data-theme="dark"] .theme-switch-btn:hover {
     opacity: 1 !important;
   }
 }
+.theme-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--card-border, #e0e0e0) !important;
+  background: var(--card-bg, #f9f9f9) !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+.theme-toggle svg {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+}
+[data-theme="light"] .theme-toggle { color: #1e3a8a !important; }
+[data-theme="dark"]  .theme-toggle { color: #FFA500 !important; }
+
+[data-theme="light"] .theme-toggle .icon-sun  { display: none !important; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block !important; }
+[data-theme="dark"]  .theme-toggle .icon-moon { display: none !important; }
+[data-theme="dark"]  .theme-toggle .icon-sun  { display: block !important; }
