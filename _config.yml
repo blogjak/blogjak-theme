@@ -1,25 +1,14 @@
 # ============================================
-# Blogjak Theme Versi 2 - Konfigurasi Jekyll
+# Blogjak Theme Versi 2.1 — SEO & Search Enhanced
 # ============================================
 
 title: "Blogjak Theme"
 tagline: "Versi 2 - Pure Markdown Blogging"
-description: "Tema Jekyll native dengan dark mode, gallery grid, dan pagination dinamis."
+description: "Tema Jekyll native dengan dark mode, gallery grid, pagination dinamis, search, dan SEO optimization."
 author: "Blogjak"
 email: "hello@blogjak.dev"
 
 # ====== PENTING: URL & BASEURL ======
-# Untuk GitHub Pages di repo "blogjak-theme":
-#   url: "https://username.github.io"
-#   baseurl: "/blogjak-theme"
-#
-# Untuk user site (username.github.io):
-#   url: "https://username.github.io"
-#   baseurl: ""
-#
-# Untuk custom domain / root:
-#   url: "https://domain.com"
-#   baseurl: ""
 url: "https://username.github.io"
 baseurl: "/blogjak-theme"
 
@@ -43,6 +32,35 @@ plugins:
   - jekyll-paginate
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+
+# ---------- SEO Defaults ----------
+lang: id_ID
+logo: "/assets/images/logo.png"
+
+twitter:
+  username: blogjak
+  card: summary_large_image
+
+social:
+  name: Blogjak Theme
+  links:
+    - https://github.com/blogjak
+    - https://twitter.com/blogjak
+
+# ---------- Search ----------
+search:
+  enabled: true
+  placeholder: "Cari artikel..."
+  max_results: 10
+  excerpt_length: 150
+
+# ---------- Related Posts ----------
+related:
+  enabled: true
+  count: 3
+  strategy: categories   # options: categories, tags, both
 
 # ---------- Defaults ----------
 defaults:
@@ -52,19 +70,11 @@ defaults:
     values:
       layout: "post"
       comments: true
+      sitemap: true
   - scope:
       path: ""
     values:
       layout: "default"
-
-# ---------- Social Media ----------
-social:
-  github: "https://github.com/blogjak"
-  twitter: "https://twitter.com/blogjak"
-  facebook: "https://facebook.com/blogjak"
-  instagram: "https://instagram.com/blogjak"
-  youtube: "https://youtube.com/@blogjak"
-  linkedin: "https://linkedin.com/in/blogjak"
 
 # ---------- Exclude ----------
 exclude:
