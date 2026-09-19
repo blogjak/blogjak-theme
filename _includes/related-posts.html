@@ -1,73 +1,99 @@
 {% if site.related.enabled and page.layout == 'post' %}
 {% assign max_related = site.related.count | default: 3 %}
 
-{% comment %} ============ Kumpulkan kandidat via where_exp ============ {% endcomment %}
+{% comment %} ============ Kumpulkan kandidat dengan counter manual ============ {% endcomment %}
 
-{% comment %} Prioritas 1: kategori sama {% endcomment %}
-{% assign same_category = '' | split: '' %}
-{% if page.categories and page.categories.size > 0 %}
-  {% for cat in page.categories %}
-    {% assign cat_posts = site.posts | where_exp: "p", "p.categories contains cat" %}
-    {% assign same_category = same_category | concat: cat_posts %}
-  {% endfor %}
-{% endif %}
+{% capture related_html %}
+  {% assign count = 0 %}
 
-{% comment %} Prioritas 2: tag sama {% endcomment %}
-{% assign same_tag = '' | split: '' %}
-{% if page.tags and page.tags.size > 0 %}
-  {% for tag in page.tags %}
-    {% assign tag_posts = site.posts | where_exp: "p", "p.tags contains tag" %}
-    {% assign same_tag = same_tag | concat: tag_posts %}
-  {% endfor %}
-{% endif %}
-
-{% comment %} Gabungkan: kategori dulu, lalu tag, lalu recent (fallback) {% endcomment %}
-{% assign all_candidates = same_category | concat: same_tag | concat: site.posts %}
-
-{% comment %} ============ Filter: exclude self, dedupe, ambil max_related ============ {% endcomment %}
-{% assign selected = '' | split: '' %}
-{% assign seen_urls = '' | split: '' %}
-
-{% for post in all_candidates %}
-  {% if selected.size >= max_related %}{% break %}{% endif %}
-  {% if post.url == page.url %}{% continue %}{% endif %}
-  {% if seen_urls contains post.url %}{% continue %}{% endif %}
-
-  {% assign selected = selected | push: post %}
-  {% assign seen_urls = seen_urls | push: post.url %}
-{% endfor %}
-
-{% comment %} 
-  CATATAN: Kalau `push` di atas tetap tidak bekerja di environment Anda,
-  gunakan pendekatan alternatif tanpa push (lihat blok di bawah).
-{% endcomment %}
-
-{% if selected.size > 0 %}
-<section class="related-posts">
-  <h2 class="related-title">
-    <i class="fa-solid fa-link"></i> Artikel Terkait
-  </h2>
-  <div class="related-grid">
-    {% for post in selected limit: max_related %}
+  {% comment %} Prioritas 1: kategori sama {% endcomment %}
+  {% for post in site.posts %}
+    {% if count >= max_related %}{% break %}{% endif %}
+    {% if post.url == page.url %}{% continue %}{% endif %}
+    {% assign match = false %}
+    {% for cat in page.categories %}
+      {% if post.categories contains cat %}{% assign match = true %}{% break %}{% endif %}
+    {% endfor %}
+    {% if match %}
       <a class="related-card" href="{{ post.url | relative_url }}">
         <div class="related-image">
-          {% if post.image %}
-            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
-          {% else %}
-            <div class="related-placeholder"><i class="fa-solid fa-newspaper"></i></div>
-          {% endif %}
+          {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          {% else %}<div class="related-placeholder"><i class="fa-solid fa-newspaper"></i></div>{% endif %}
         </div>
         <div class="related-body">
-          {% if post.categories.first %}
-            <span class="related-cat">{{ post.categories.first }}</span>
-          {% endif %}
+          {% if post.categories.first %}<span class="related-cat">{{ post.categories.first }}</span>{% endif %}
           <h3 class="related-card-title">{{ post.title }}</h3>
-          <div class="related-card-meta">
-            <i class="fa-regular fa-calendar"></i> {{ post.date | date: "%d %b %Y" }}
-          </div>
+          <div class="related-card-meta"><i class="fa-regular fa-calendar"></i> {{ post.date | date: "%d %b %Y" }}</div>
         </div>
       </a>
+      {% assign count = count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %} Prioritas 2: tag sama (yang belum muncul) {% endcomment %}
+  {% for post in site.posts %}
+    {% if count >= max_related %}{% break %}{% endif %}
+    {% if post.url == page.url %}{% continue %}{% endif %}
+    {% assign match = false %}
+    {% for tag in page.tags %}
+      {% if post.tags contains tag %}{% assign match = true %}{% break %}{% endif %}
     {% endfor %}
+    {% if match %}
+      {% comment %} Cek apakah sudah ada di prioritas 1 — skip kalau iya {% endcomment %}
+      {% assign already = false %}
+      {% for cat in page.categories %}
+        {% if post.categories contains cat %}{% assign already = true %}{% break %}{% endif %}
+      {% endfor %}
+      {% unless already %}
+        <a class="related-card" href="{{ post.url | relative_url }}">
+          <div class="related-image">
+            {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+            {% else %}<div class="related-placeholder"><i class="fa-solid fa-newspaper"></i></div>{% endif %}
+          </div>
+          <div class="related-body">
+            {% if post.categories.first %}<span class="related-cat">{{ post.categories.first }}</span>{% endif %}
+            <h3 class="related-card-title">{{ post.title }}</h3>
+            <div class="related-card-meta"><i class="fa-regular fa-calendar"></i> {{ post.date | date: "%d %b %Y" }}</div>
+          </div>
+        </a>
+        {% assign count = count | plus: 1 %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %} Prioritas 3: fallback ke post terbaru {% endcomment %}
+  {% for post in site.posts %}
+    {% if count >= max_related %}{% break %}{% endif %}
+    {% if post.url == page.url %}{% continue %}{% endif %}
+    {% assign already = false %}
+    {% for cat in page.categories %}
+      {% if post.categories contains cat %}{% assign already = true %}{% break %}{% endif %}
+    {% endfor %}
+    {% for tag in page.tags %}
+      {% if post.tags contains tag %}{% assign already = true %}{% break %}{% endif %}
+    {% endfor %}
+    {% unless already %}
+      <a class="related-card" href="{{ post.url | relative_url }}">
+        <div class="related-image">
+          {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          {% else %}<div class="related-placeholder"><i class="fa-solid fa-newspaper"></i></div>{% endif %}
+        </div>
+        <div class="related-body">
+          {% if post.categories.first %}<span class="related-cat">{{ post.categories.first }}</span>{% endif %}
+          <h3 class="related-card-title">{{ post.title }}</h3>
+          <div class="related-card-meta"><i class="fa-regular fa-calendar"></i> {{ post.date | date: "%d %b %Y" }}</div>
+        </div>
+      </a>
+      {% assign count = count | plus: 1 %}
+    {% endunless %}
+  {% endfor %}
+{% endcapture %}
+
+{% if related_html contains 'related-card' %}
+<section class="related-posts">
+  <h2 class="related-title"><i class="fa-solid fa-link"></i> Artikel Terkait</h2>
+  <div class="related-grid">
+    {{ related_html }}
   </div>
 </section>
 {% endif %}
