@@ -2,11 +2,11 @@
 # Blogjak Theme Versi 3.0 — Konfigurasi Jekyll
 # ============================================
 
-title: "Sokaraja Laundry"
-tagline: "Rajanya Laundry Di Purwokerto dan Banyumas"
-description: "Kami menerima jasa laundry kiloan dan satuan, menjual peralatan dan perlengkapan laundry diantaranya sabun dan parfum"
-author: "Wahyudi"
-email: "sokarajalaundry@gmail.com"
+title: "Blogjak Theme"
+tagline: "Versi 3 - Pure Markdown Blogging Platform"
+description: "Tema Jekyll native lengkap dengan dark mode, gallery grid, search, related posts, kategori, tag, dan SEO."
+author: "Blogjak"
+email: "hello@blogjak.dev"
 version: "3.0.0"
 
 # ====== URL & BASEURL ======
@@ -14,8 +14,8 @@ version: "3.0.0"
 # - GitHub Pages repo: baseurl: "/blogjak-theme"
 # - Root domain:       baseurl: ""
 # - Subfolder:         baseurl: "/nama-folder"
-url: "https://sokarajalaundry.github.io"
-baseurl: ""
+url: "https://username.github.io"
+baseurl: "/blogjak-theme-v3"
 
 # ====== Build Settings ======
 markdown: kramdown
@@ -43,7 +43,7 @@ plugins:
 
 # ====== Language & SEO ======
 lang: id_ID
-logo: "https://scontent-cgk1-1.xx.fbcdn.net/v/t39.30808-6/470205868_569155715736487_8553985799230445898_n.jpg?stp=dst-jpg_tt6&cstp=mx500x500&ctp=s500x500&_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE3QllIHl2n7ogcs1y9_qDrmx4sDctYPYebHiwNy1g9h68rXT0Pag2hHqOktMZxt_WUh53r_fPt5vZaq37g7gzU&_nc_ohc=mu7fAgjY86oQ7kNvwGZnRI1&_nc_oc=Adp-ObjLODC-K6JeZQp5JLa6lfbMPDKK1lWard0BQ6bcTOMA_QOU2uM5JT80KiBDeyc&_nc_zt=23&_nc_ht=scontent-cgk1-1.xx&_nc_gid=4_1cc4CwmADHi3Nyeu7KtQ&_nc_ss=7f2a8&oh=00_AQKq7tqmuG1_vq1XlCUY_17O8oQxMGHgD-TUi-CyMqhRvA&oe=6AB82824"
+logo: "/assets/images/logo.png"
 
 twitter:
   username: blogjak
